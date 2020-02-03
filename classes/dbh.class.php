@@ -1,25 +1,24 @@
 <?php 
 
-class Dbh
-{
+class Dbh {
     private $host = "localhost";
-    private $user = 'root';
-    private $password = '';
-    private $dbName = 'logindb';
-    
+    private $user = "root";
+    private $password = "";
+    private $dbName = "phplogin";
+
     protected function connect() 
     {
-
         try {
-            $dataSourceName = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
-            $pdo = new PDO($dataSourceName, $this->user, $this->password);
-            // 
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            // Get error message if there is an error
-            echo 'Connection failed: ' . $e->getMessage();
+            $dsn = 'mysql:host=' .  $this->host . ';dbname=' .  $this->dbName;
+            $options = [
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES   => false,
+            ];
+            $pdo = new PDO($dsn, $this->user, $this->password, $options);
+            return $pdo;
+        } catch(PDOException $error) {
+            echo $error->getMessage();
         }
-
-       
     }
 }

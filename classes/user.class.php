@@ -1,14 +1,14 @@
 <?php 
 
-include_once('dbh.class.php');
-
-class User 
+class User extends Dbh
 {
-    private $db;
+  public function register($email, $username, $password) 
+  {
+      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    public function __construct()
-    {
-        $this->db = new Dbh();
-        $this->db = $this->db->connect();
-    }
+      $query = "INSERT INTO user2 (email, username, password) VALUES (:email, :username, :password)";
+      $stmt = $this->connect()->prepare($query);
+      $stmt->execute([$email, $username, $hashedPassword]);
+  }
+
 }
