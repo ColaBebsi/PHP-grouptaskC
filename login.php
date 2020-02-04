@@ -1,10 +1,13 @@
 <?php 
 
+session_start();
+
 require 'include/_header.inc.php';
 require 'classes/Dbh.class.php';
 require 'classes/User.class.php';
 
 if (isset($_POST['login_submit'])) {
+
 
 }
 
