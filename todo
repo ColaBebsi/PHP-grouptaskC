@@ -1,0 +1,66 @@
+PHP_PDO_LOGIN
+
+den 4 februari 2020
+09:43
+
+CLASSES FOLDER
+Dbh.class.php
+Set up class DB with PDO
+Check if connection works 
+
+User.class.php
+Extend Dbh class to be able to connect to MySQL
+Create register method
+	1. Validate email
+	2. Use prepared statement 
+	
+Create login method 
+	1. When logging in, get user data
+	2. Check if that user is in DB
+	3. If there is, check user password against hashedPassword with password_verify method
+	4. Use prepared statement 
+
+
+ROOT FOLDER
+Index.php
+Add basic HTML template 
+Include required files 
+Add logout button and anchor tag to login page
+	Ø PHP code 
+Session start 
+Use session vars to display user data such as email and username 
+
+Register.php
+Add basic HTML template
+Include required files
+Add form with email, username and password inputs
+Add register button
+	Ø PHP code 
+Check if there is a submit form
+Store user inputs in super global vars
+Instantiate User class and use register method
+If it passed send user to login page
+If it failed send user to register page with the input fields filled 
+Check for valid email
+Error if there are empty fields 
+
+Login.php
+Add basic HTML template
+Include required files
+Add form with email and password inputs
+Add login button and anchor tag to register page 
+	Ø PHP code
+Start session
+Check if there is a submit form 
+Store user inputs in vars 
+Instantiate User class and use login method 
+Check for valid user or not
+If it passed redirect to index page
+If it failed redirect to login page  with empty fields
+
+INCLUDES FOLDER 
+_header.inc.php
+Inlude all header stuff in this file 
+
+_footer.inc.php
+Include all footer stuff in this file 

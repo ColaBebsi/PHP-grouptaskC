@@ -21,32 +21,41 @@ class User extends Dbh
       return $results;
   }
 
+//   public function login($email, $password)
+//   {
+//     $query = "SELECT * FROM user2 WHERE email = :email AND password = :password"; 
+//   }
+
 
   
-// function login($useremailOrName, $userpassword)    
-// {        
-//     $sql = "SELECT * FROM users WHERE username = ? OR useremail = ?";        
-//     $stmt = $this->connect()->prepare($sql);        
-//     $stmt->execute([$useremailOrName, $useremailOrName]);        
-//     $result = $stmt->fetch();        
-//     $row = $stmt->rowCount();        
-//     if ($row > 0) {            
-//         $pwdCheck = password_verify($userpassword, $result['userpassword']);            
-//         if ($pwdCheck == false) {                
-//         header("Location: ../index.php?error=wrongpwd");                
-//         exit();            
-//         } else {                
-//             session_start();                
-//             $_SESSION['userId'] = $result['id'];                
-//             $_SESSION['username'] = $result['username'];                
-//             $_SESSION['useremail'] = $result['useremail'];
-//             header("Location: ../index.php?login=success");                
-//             exit();            
-//     }        
-//     } else {            
-//         header("Location: ../index.php?error=nouser");            
-//         exit();        
-//     }    
-// }
+public function login($email, $password)    
+{        
+    $sql = "SELECT * FROM user2 WHERE email = ?";        
+    $stmt = $this->connect()->prepare($sql);        
+    $stmt->execute([$email]);        
+    $result = $stmt->fetch();        
+    $row = $stmt->rowCount();        
+    if ($row > 0) {            
+        $pwdCheck = password_verify($password, $result['password']);            
+        if ($pwdCheck == false) {                
+        //header("Location: ../index.php?error=wrongpwd");      
+        echo 'FAILED';          
+        exit();            
+        } else {                
+            //session_start();                
+            $_SESSION['id'] = $result['id'];                
+            $_SESSION['username'] = $result['username'];                
+            $_SESSION['email'] = $result['email'];
+            echo 'SUCCESS';
+            exit();            
+    }        
+    } else {            
+        // header("Location: ../index.php?error=nouser");      
+        echo 'SUPPPP';      
+        exit();        
+    }    
+}
 
 }
+
+
