@@ -9,8 +9,9 @@ if (isset($_POST['register_submit'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $user = new User();
-    $user->register($email, $username, $password);
+	$user = new User();
+	$user->register($email, $username, $password);
+	// $user->checkEmail($email);
 }
 
 ?>
