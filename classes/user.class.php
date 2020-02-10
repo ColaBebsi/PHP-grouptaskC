@@ -63,6 +63,15 @@ public function login($email, $password)
     }    
 }
 
+public function logoutUser()
+{
+    // session_start();
+    session_unset();
+    session_destroy();
+    header("Location: register.php");
+    // echo 'works';
+}
+
 }
 
 
