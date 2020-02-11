@@ -5,6 +5,10 @@ session_start();
 require 'include/_header.inc.php';
 require 'classes/Dbh.class.php';
 require 'classes/User.class.php';
+require 'classes/erroruser.class.php';
+
+$error = new Erroruser();
+
 
 if (isset($_POST['login_submit'])) {
 	$email = $_POST['email'];
@@ -15,9 +19,13 @@ if (isset($_POST['login_submit'])) {
 }
 
 ?>
-
 <div class="login">
 	<h1>Login</h1>
+	<?php 
+if (isset($_GET['error'])) {
+	$error->loginError($_GET['error']);
+}	
+ ?>
 	<form action="login.php" method="post">
 		<label for="email">
 			<i class="fas fa-user"></i>
@@ -31,7 +39,7 @@ if (isset($_POST['login_submit'])) {
 
 		<input type="submit" value="Login" name="login_submit">
 	</form>
-	<a href="register.php">Register</a>
+	<a href="register.php" class="text-info">Register</a>
 </div>
 
 <?php 'include/_footer.inc.php' ?>

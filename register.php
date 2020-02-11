@@ -3,54 +3,36 @@
 require 'include/_header.inc.php';
 require 'classes/Dbh.class.php';
 require 'classes/User.class.php';
+require 'classes/erroruser.class.php';
+$error = new Erroruser();
+
 
 if (isset($_POST['register_submit'])) {
-	
 	$username = $_POST['username'];
 	$email = $_POST['email'];   
 	$password = $_POST['password'];
-
-	if (empty($username) || empty($email) || empty($password))  
-	{
-		header("location: ./register.php?error=emptyfields");
-        exit();
-	}
-	elseif (!filter_var($email, FILTER_VALIDATE_EMAIL) && !preg_match("/^[a-zA-Z0-9]*$/",$username)) {
-        header("location: ./register.php?error=invalid-mail&uid=");
-        exit();
-}
-else if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-	{
-        header("location: ./register.php?error=invalid-email");
-        exit();
-    }
-	else if(!preg_match("/^[a-zA-Z0-9]*$/",$username))
-	{
-        header("location: ./register.php?error=invalid-username");
-        exit();
-	}
-	else 
-	{
-		try 
-	{   
+	
+    try {   
 		$user = new User();
+		$error->validation($username, $email, $password);	
 		$user->register($email, $username, $password);
-		header("location: ./login.php?succsess=registercompleted");
-		
-	} 
-		catch (exception $e) 
-	{
+		header("location: ./login.php?success=registercompleted");	
+	} catch (exception $e) {
 		echo 'Caught exception: ',  $e->getMessage();
-	}
-
 	}
 	
 }
+
 
 ?>
 
 <div class="login">
 	<h1>Register</h1>
+	<?php 
+    if (isset($_GET['error'])) {
+	$error->displayError($_GET['error']);
+    }	
+    ?>
 	<form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
 		<label for="email">
 			<i class="fas fa-envelope"></i>
@@ -69,7 +51,7 @@ else if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 		
 		<input type="submit" value="Register" name="register_submit">
 	</form>
-    <a href="login.php">Login</a>
+    <a href="login.php" class="text-info" >Login</a>
 </div>
 
 

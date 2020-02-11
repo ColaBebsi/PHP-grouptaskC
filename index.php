@@ -7,11 +7,4 @@ require 'classes/User.class.php';
 $user = new User();
 var_dump($user->showUser());
 
-
-?>
-
-
-
-
-
-<?php require 'include/_footer.inc.php'; ?>
+require 'include/_footer.inc.php'; 
