@@ -4,6 +4,11 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase 
 {
+    // public function setUp():void
+    // {
+    //     $this->user = new User();
+    // }
+
     public function testGetEmail()
     {
         include_once __DIR__ . '/../classes/dbh.class.php';
