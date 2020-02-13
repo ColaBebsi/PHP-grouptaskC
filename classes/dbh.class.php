@@ -1,10 +1,11 @@
 <?php 
 
-class Dbh {
-    private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $dbName = "phplogin";
+class Dbh
+{
+    private $_host = "localhost";
+    private $_user = "root";
+    private $_password = "";
+    private $_dbName = "phplogin";
 
     protected function connect() 
     {

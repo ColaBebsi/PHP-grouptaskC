@@ -1,12 +1,12 @@
 <?php 
-
 class User extends Dbh
 {
 
     public function register($email, $username, $password) 
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $query = "INSERT INTO user2 (email, username, password) VALUES (:email, :username, :password)";
+        $query = "INSERT INTO user2 (email, username, password) 
+                  VALUES (:email, :username, :password)";
         $stmt = $this->connect()->prepare($query);
 
         try {
@@ -39,28 +39,29 @@ class User extends Dbh
             header("Location: ./login.php?error=emptyfields");               
             exit(); 
         }   
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL))	{
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             header("location: ./login.php?error=invalidmail");
-            exit();}
+            exit();
+        }
 
-    if ($row > 0) {            
-        $pwdCheck = password_verify($password, $result['password']);            
-        if ($pwdCheck == false) {                
-        header("Location: ./login.php?error=wrongpwd");               
-        exit();  
+        if ($row > 0) {            
+            $pwdCheck = password_verify($password, $result['password']);            
+            if ($pwdCheck == false) {                
+                header("Location: ./login.php?error=wrongpwd");               
+                exit();  
         
-        }else {                
-            //session_start();                
-            $_SESSION['id'] = $result['id'];                
-            $_SESSION['username'] = $result['username'];                
-            $_SESSION['email'] = $result['email'];
-            echo '<h4 class="text-success">SUCCESS</h4>' ;
-            exit();            
-        }   
+            } else {                
+                //session_start();                
+                $_SESSION['id'] = $result['id'];                
+                $_SESSION['username'] = $result['username'];                
+                $_SESSION['email'] = $result['email'];
+                echo '<h4 class="text-success">SUCCESS</h4>' ;
+                exit();            
+            }   
 
-    } else {            
-        header("location: ./login.php?error=usernonexisting"); 
-        exit();        
-    }    
+        } else {            
+            header("location: ./login.php?error=usernonexisting"); 
+            exit();        
+        }    
     }
 }
