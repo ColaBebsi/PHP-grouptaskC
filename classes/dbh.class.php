@@ -1,5 +1,10 @@
 <?php 
 
+// namespace classes;
+
+// use \PDO;
+// use \PDOException;
+
 class Dbh {
     private $_host = "localhost";
     private $_user = "root";
