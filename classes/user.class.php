@@ -3,9 +3,8 @@
 // namespace classes;
 
 // use \FFI\Exception;
-
 class User extends Dbh
-{   
+{
     public function register($email, $username, $password) 
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -27,23 +26,35 @@ class User extends Dbh
         
         $result = $stmt->fetch();        
         $row = $stmt->rowCount();
+        if (empty($email)||empty($password)) {
+            header("Location: ./login.php?error=emptyfields");               
+            exit(); 
+        }   
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            header("location: ./login.php?error=invalidmail");
+            exit();
+        }
 
         if ($row > 0) {            
             $pwdCheck = password_verify($password, $result['password']);            
             if ($pwdCheck == false) {                
-                header("Location: ./login.php?error=wrongpwd");      
-                exit();            
+                header("Location: ./login.php?error=wrongpwd");               
+                exit();  
+        
             } else {                
+                //session_start();                
                 $_SESSION['id'] = $result['id'];                
                 $_SESSION['username'] = $result['username'];                
                 $_SESSION['email'] = $result['email'];
-                header('Location: index.php');
+                header("Location: ./index.php?success=logged in");  
+                echo '<h4 class="text-success">SUCCESS</h4>' ;
                 exit();            
-            }        
+            }   
+
         } else {            
-            header("location: ./login.php?error=wrongpwd"); 
+            header("location: ./login.php?error=usernonexisting"); 
             exit();        
-        }       
+        }    
     }
 
     public function logoutUser()
@@ -84,3 +95,10 @@ class User extends Dbh
 }
 
 
+
+
+
+
+
+
+  

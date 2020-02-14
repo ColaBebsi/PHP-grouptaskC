@@ -5,7 +5,8 @@
 // use \PDO;
 // use \PDOException;
 
-class Dbh {
+class Dbh
+{
     private $_host = "localhost";
     private $_user = "root";
     private $_password = "";
